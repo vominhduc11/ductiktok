@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 //import javax.persistence.Table;
 
@@ -17,25 +19,23 @@ public class posts implements Serializable{
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private String avatar;
     private String video;
-    private String name;
-    private String subname;
     private String content;
     private String music;
-    private String followers;
-    private String likes;
     private String userLike;
     private String userComment;
     private String userShare;
     @OneToMany(mappedBy = "posts")
     private List<link> links;
-    
-	public List<link> getLinks() {
-		return links;
+	@ManyToOne
+	@JoinColumn(name = "user_id")
+	private user user;
+	
+	public user getUser() {
+		return user;
 	}
-	public void setLinks(List<link> links) {
-		this.links = links;
+	public void setUser(user user) {
+		this.user = user;
 	}
 	public long getId() {
 		return id;
@@ -43,29 +43,11 @@ public class posts implements Serializable{
 	public void setId(long id) {
 		this.id = id;
 	}
-	public String getAvatar() {
-		return avatar;
-	}
-	public void setAvatar(String avatar) {
-		this.avatar = avatar;
-	}
 	public String getVideo() {
 		return video;
 	}
 	public void setVideo(String video) {
 		this.video = video;
-	}
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
-	public String getSubname() {
-		return subname;
-	}
-	public void setSubname(String subname) {
-		this.subname = subname;
 	}
 	public String getContent() {
 		return content;
@@ -78,18 +60,6 @@ public class posts implements Serializable{
 	}
 	public void setMusic(String music) {
 		this.music = music;
-	}
-	public String getFollowers() {
-		return followers;
-	}
-	public void setFollowers(String followers) {
-		this.followers = followers;
-	}
-	public String getLikes() {
-		return likes;
-	}
-	public void setLikes(String likes) {
-		this.likes = likes;
 	}
 	public String getUserLike() {
 		return userLike;
@@ -109,5 +79,13 @@ public class posts implements Serializable{
 	public void setUserShare(String userShare) {
 		this.userShare = userShare;
 	}
+	public List<link> getLinks() {
+		return links;
+	}
+	public void setLinks(List<link> links) {
+		this.links = links;
+	}
+    
+	
     
 }
